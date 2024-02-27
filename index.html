@@ -7,7 +7,6 @@
     <link rel="stylesheet" href="style.css">
     <script src="script.js"></script>
 
-    <!-- <script src="dom-to-image.js"></script> -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/dom-to-image/2.6.0/dom-to-image.min.js"></script>
     <style>
         /* Additional styles for the hidden ID card */
@@ -90,7 +89,7 @@
                 <input type="text" class="entry" id="dob" required pattern="[A-Za-z0-9]+">
                 
                 <label for="photo">Photo:</label>
-                <input type="file" id="photo" accept="image/*" required>
+                <input type="file" id="photo" accept="image/*" capture="user" required>
     
                 <div class="button-div">
                     <button>Submit</button>
@@ -148,47 +147,30 @@
 
         }
         function downloadIDCard() {
-    var hiddenCard = document.getElementById('hiddenCard');
+            var hiddenCard = document.getElementById('hiddenCard');
+            var downloadWidth = hiddenCard.offsetWidth;
+            var downloadHeight = hiddenCard.offsetHeight;
 
-    // Set the desired width and height for the downloaded image
-    var downloadWidth = hiddenCard.offsetWidth; // Use the width of the card
-    var downloadHeight = hiddenCard.offsetHeight; // Use the height of the card
+            hiddenCard.style.width = downloadWidth + 'px';
+            hiddenCard.style.height = downloadHeight + 'px';
 
-    // Set the dimensions of the hiddenCard for the download
-    hiddenCard.style.width = downloadWidth + 'px';
-    hiddenCard.style.height = downloadHeight + 'px';
+            domtoimage.toBlob(hiddenCard, { filter: excludeButton })
+                .then(function (blob) {
+                    var link = document.createElement('a');
+                    link.href = URL.createObjectURL(blob);
+                    link.download = 'ID_Card.png';
+                    link.click();
 
-    // Convert the HTML content of the hidden card to an image
-    domtoimage.toBlob(hiddenCard, { filter: excludeButton })
-        .then(function (blob) {
-            // Create a link element to trigger the download
-            var link = document.createElement('a');
-            link.href = URL.createObjectURL(blob);
-            link.download = 'ID_Card.png';
-            link.click();
+                    hiddenCard.style.width = '';
+                    hiddenCard.style.height = '';
 
-            // Reset the dimensions of the hiddenCard after download
-            hiddenCard.style.width = '';
-            hiddenCard.style.height = '';
+                    document.getElementById('downloadBtn').style.display = 'none';
+                });
 
-            // Hide the download button
-            document.getElementById('downloadBtn').style.display = 'none';
-        });
-
-    // Function to filter out the download button
-    function excludeButton(node) {
-        return (node.id !== 'downloadBtn') ? node : false;
-    }
-}
-
-
-
-            // Reset the form
-            // document.getElementById('userForm').reset();
-
-
-            
+            function excludeButton(node) {
+                return (node.id !== 'downloadBtn') ? node : false;
+            }
+        }
     </script>
 </body>
 </html>
-    
