@@ -4,7 +4,7 @@ The user has to scan a QR Code and fill in the required credentials along with a
 
 # QR Code
 
-(Please note that this poster was not created by me.)
+(Please note that the below poster (A4.pdf) was not designed by me.)
 
 [A4.pdf](https://github.com/athul-2003/QR-2/files/15256319/A4.pdf)
 
