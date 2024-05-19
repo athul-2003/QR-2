@@ -1,4 +1,4 @@
-# Virtual User Pass Creator using HTML,CSS,Javascript
+# Realtime Virtual User Pass Creator using HTML,CSS,Javascript
 
 The user has to scan a QR Code and fill in the required credentials along with a photo and hence generate their User Pass.
 
